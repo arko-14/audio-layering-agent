@@ -1,19 +1,52 @@
+"""
+Audio Feature Extraction Utilities
+==================================
+
+Functions for analyzing audio characteristics to help classify video mood
+and inform mixing decisions.
+
+Features Computed:
+    - RMS Energy Curve: Loudness over time for visualization
+    - Speech Rate: Estimated words per second
+    - Pitch Variability: How expressive/monotone the speaker is
+    - Content Type Hints: Heuristic classification of content
+
+These features are used by the Vibe Director to make better mood
+classifications without needing full speech-to-text transcription.
+"""
 import numpy as np
 import soundfile as sf
 from typing import List, Dict
 
+
 def rms_energy_curve(wav_path: str, hop_s: float = 0.5) -> List[Dict]:
+    """
+    Compute RMS (Root Mean Square) energy curve for audio visualization.
+    
+    Args:
+        wav_path: Path to WAV file
+        hop_s: Time step between measurements in seconds
+    
+    Returns:
+        List of {t: timestamp, rms: energy_value} dicts
+    
+    RMS represents perceived loudness - higher values = louder audio.
+    Used for the energy curve visualization in the timeline UI.
+    """
     x, sr = sf.read(wav_path)
+    # Convert stereo to mono if needed
     if x.ndim > 1:
         x = x.mean(axis=1)
 
-    hop = int(hop_s * sr)
-    win = hop
+    hop = int(hop_s * sr)  # Hop size in samples
+    win = hop              # Window size = hop size (no overlap)
     out = []
+    
     for i in range(0, len(x), hop):
         chunk = x[i:i+win]
         if len(chunk) == 0:
             break
+        # RMS = sqrt(mean(x^2)), add small epsilon to avoid log(0) issues
         rms = float(np.sqrt(np.mean(chunk.astype(np.float32) ** 2)) + 1e-9)
         t = float(i / sr)
         out.append({"t": t, "rms": rms})
@@ -21,13 +54,19 @@ def rms_energy_curve(wav_path: str, hop_s: float = 0.5) -> List[Dict]:
 
 
 def compute_speech_features(wav_path: str, speech_segments: List[Dict]) -> Dict:
-    """Compute audio features to help LLM classify mood better.
+    """
+    Compute audio features to help LLM classify mood better.
+    
+    Args:
+        wav_path: Path to extracted audio WAV
+        speech_segments: List of {s: start, e: end} speech segments
     
     Returns:
-        - speech_rate_wps: estimated words per second (based on segment patterns)
-        - pitch_variability: low/medium/high based on zero-crossing variance
-        - rms_db: average loudness in dB
-        - likely_type: hint about content type
+        Dict with:
+        - speech_rate_wps: Estimated words per second
+        - pitch_variability: "low" | "medium" | "high"
+        - rms_db: Average loudness in dB
+        - likely_type: Hint about content type
     """
     try:
         x, sr = sf.read(wav_path)

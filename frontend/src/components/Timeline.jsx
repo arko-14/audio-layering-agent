@@ -1,5 +1,25 @@
+/**
+ * Timeline Component
+ * ==================
+ * 
+ * Visual representation of the audio layers in the video.
+ * 
+ * Displays three tracks:
+ * 1. Speech Detection - Green segments where voice was detected (VAD)
+ * 2. Background Music - Blue bars showing music placement
+ * 3. Sound Effects - Orange markers at SFX timestamps
+ * 
+ * Features:
+ * - Proportional width based on segment duration
+ * - Hover tooltips with exact timestamps
+ * - Time markers at 0%, 25%, 50%, 75%, 100%
+ * - Legend explaining each track color
+ * 
+ * Polls /api/jobs/{jobId}/timeline every 1.5 seconds until data arrives.
+ */
 import React, { useEffect, useState } from "react";
 
+// Timeline visualization styles
 const styles = {
   card: {
     background: "#fff",

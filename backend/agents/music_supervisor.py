@@ -1,3 +1,28 @@
+"""
+Music Supervisor Agent
+======================
+
+Selects background music based on the detected vibe. Uses random selection
+from vibe-matched tracks to ensure variety across different videos.
+
+Key Responsibilities:
+1. Filter music library by vibe (educational, calm, energetic, serious)
+2. Randomly select a track (seeded by job_id for reproducibility in testing)
+3. Set appropriate gain levels (quieter for voice-heavy content)
+4. Configure fade in/out for smooth transitions
+
+Gain Strategy:
+    - Educational: -20 to -16 dB (very quiet, voice is priority)
+    - Calm: -18 to -14 dB (quiet but atmospheric)
+    - Serious: -22 to -18 dB (minimal, voice is critical)
+    - Energetic: -14 to -10 dB (music can be more present)
+
+Outputs:
+    music_plan.json with:
+    - tracks: [{id, from, to, gain_db, crossfade_s}, ...]
+    - global_fade_in_s, global_fade_out_s
+    - notes: Selection reasoning
+"""
 import random
 import hashlib
 import time
@@ -5,6 +30,7 @@ from pathlib import Path
 from utils.json_utils import read_json, write_json
 
 # Gain settings by vibe (in dB) - LOWER = quieter music, clearer voice
+# Each tuple is (min_gain, max_gain) - actual value randomized within range
 GAIN_BY_VIBE = {
     "educational": (-20, -16),  # Very quiet, voice is king
     "calm": (-18, -14),         # Quiet but present
@@ -15,8 +41,16 @@ GAIN_BY_VIBE = {
 
 def music_supervisor_node(state: dict) -> dict:
     """
-    Pure random track selection (no LLM) with proper gain staging.
-    Different video = different track, guaranteed.
+    Select and configure background music for the video.
+    
+    Pipeline Stage: 3 of 7
+    Input: state.artifacts['analysis_json'], state.artifacts['vibe_json']
+    Output: state.artifacts['music_plan_json']
+    
+    Uses pure random selection (no LLM) because:
+    1. Faster execution, no API call needed
+    2. More variety - different videos get different tracks
+    3. Vibe filtering ensures appropriate mood match
     """
     job_dir = Path(state["job_dir"])
     job_id = state.get("job_id", str(time.time()))

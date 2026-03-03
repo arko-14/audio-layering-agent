@@ -1,9 +1,54 @@
+"""
+Renderer Agent
+==============
+
+The core audio processing agent that combines all layers into the final mix.
+Builds a complex FFmpeg filtergraph to:
+
+1. Voice Track:
+   - Extract and normalize original voice audio
+
+2. Background Music:
+   - Loop/trim music to video duration
+   - Apply gain based on vibe
+   - Fade in at start, fade out at end
+   - Optional crossfade between multiple tracks
+
+3. Ducking:
+   - Sidechain compress music using voice as trigger
+   - Music automatically ducks when speech is detected
+
+4. Sound Effects:
+   - Position SFX at specific timestamps using adelay
+   - Apply individual gain settings
+
+5. Final Mix:
+   - Combine all layers with amix
+   - Loudness normalize to -14 LUFS (web standard)
+   - Mux audio back to original video
+
+Outputs:
+    - mixed.wav: Final audio mix
+    - enhanced.mp4: Video with new audio track
+    - timeline.json: Visualization data for frontend
+"""
 from pathlib import Path
 import math
 from utils.json_utils import read_json, write_json
 from utils.ffmpeg_utils import run, extract_audio_wav, mux_audio_to_video
 
+
 def renderer_node(state: dict) -> dict:
+    """
+    Mix all audio layers and produce the final enhanced video.
+    
+    Pipeline Stage: 6 of 7
+    Input: All previous artifacts (analysis, music_plan, ducking, sfx_plan)
+    Output: state.output_video_path, state.artifacts['timeline_json']
+    
+    This is the most complex agent - builds a multi-input FFmpeg
+    filtergraph with sidechain compression and timed SFX placement.
+    """
     job_dir = Path(state["job_dir"])
     input_video = state["input_video_path"]
 

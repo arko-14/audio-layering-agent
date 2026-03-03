@@ -1,5 +1,23 @@
+/**
+ * Upload Component
+ * ================
+ * 
+ * Drag-and-drop video upload interface.
+ * 
+ * Features:
+ * - Drag & drop support with visual feedback
+ * - Click-to-browse file picker
+ * - Loading state while uploading
+ * - Shows pipeline stages for user awareness
+ * 
+ * Supported formats: MP4, MOV, MKV, WebM
+ * 
+ * On successful upload, calls onJobCreated(job_id) to trigger
+ * the parent to start polling for job status.
+ */
 import React, { useState, useRef } from "react";
 
+// Inline styles - kept in component for MVP simplicity
 const styles = {
   card: {
     background: "#fff",

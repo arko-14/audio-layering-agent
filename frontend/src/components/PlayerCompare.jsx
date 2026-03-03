@@ -1,5 +1,21 @@
+/**
+ * PlayerCompare Component
+ * =======================
+ * 
+ * Video player with enhanced/original toggle (A/B comparison).
+ * 
+ * Features:
+ * - Tab switcher between "Enhanced Output" and "Original Input"
+ * - HTML5 video player with native controls
+ * - Streams enhanced video from /api/jobs/{jobId}/result
+ * - Footer explaining what enhancements were applied
+ * 
+ * Note: Original video preview is placeholder in MVP.
+ * Full implementation would serve the original input for comparison.
+ */
 import React, { useState } from "react";
 
+// Player card styles
 const styles = {
   card: {
     background: "#fff",

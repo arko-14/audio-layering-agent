@@ -1,7 +1,44 @@
+"""
+Mixing Engineer Agent
+=====================
+
+Configures audio ducking and compression settings for the final mix.
+Determines how much the background music should be reduced when voice
+is detected (sidechain compression).
+
+Ducking Explained:
+    - Voice is always the priority in speech-heavy content
+    - Music plays at 'base' level during silence
+    - Music ducks (gets quieter) when voice is detected
+    - Attack/release control how fast ducking engages
+
+Vibe-Based Ducking:
+    - Educational: -8 dB reduction (clear voice)
+    - Calm: -6 dB reduction (balanced)
+    - Serious: -10 dB reduction (voice dominates)
+    - Energetic: -4 dB reduction (music stays present)
+
+Outputs:
+    ducking.json with:
+    - Sidechain compressor settings (threshold, ratio, attack, release)
+    - Target levels (voice LUFS, music base/speech/gap levels)
+    - Vibe-specific parameters
+"""
 from pathlib import Path
 from utils.json_utils import read_json, write_json
 
+
 def mixing_engineer_node(state: dict) -> dict:
+    """
+    Configure ducking/compression settings for audio mixing.
+    
+    Pipeline Stage: 5 of 7
+    Input: state.artifacts['vibe_json'], state.artifacts['music_plan_json']
+    Output: state.artifacts['ducking_json']
+    
+    Note: This agent doesn't use LLM - settings are rule-based
+    because they're technical audio parameters.
+    """
     job_dir = Path(state["job_dir"])
     vibe = read_json(state["artifacts"]["vibe_json"])
     music_plan = read_json(state["artifacts"]["music_plan_json"])

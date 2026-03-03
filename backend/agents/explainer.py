@@ -1,15 +1,48 @@
+"""
+Explainer Agent
+===============
+
+Generates human-readable explanations of all audio decisions made
+by the pipeline. Helps users understand WHY specific choices were made.
+
+This agent serves two purposes:
+1. Transparency: Users see the AI's reasoning, building trust
+2. Debugging: Developers can verify decision logic is sound
+
+Outputs:
+    explain.txt: Bullet-point explanation (shown in UI)
+    report.json: Detailed structured report with all parameters
+
+The explanation covers:
+    - Why the video was classified with its vibe
+    - Why that specific music track was selected
+    - What ducking settings were applied and why
+    - Why SFX were placed (or not placed)
+"""
 from pathlib import Path
 from datetime import datetime
 from graph.groq_client import groq_chat_json
 from utils.json_utils import read_json, write_json
 
+# LLM prompt for generating explanations
 SYSTEM = """You are a helpful assistant explaining editorial audio decisions.
 Keep it short and concrete. Mention vibe, music choice, ducking behavior, and SFX restraint.
 Format as bullet points starting with •"""
 
 SCHEMA = """{ "text": "string" }"""
 
+
 def explainer_node(state: dict) -> dict:
+    """
+    Generate human-readable explanation of audio decisions.
+    
+    Pipeline Stage: 7 of 7 (final)
+    Input: All previous artifacts
+    Output: state.artifacts['explain_txt'], state.artifacts['report_json']
+    
+    Uses Groq LLM to synthesize a natural language summary
+    from the technical parameters of all previous agents.
+    """
     job_dir = Path(state["job_dir"])
     job_id = state.get("job_id", "unknown")
     

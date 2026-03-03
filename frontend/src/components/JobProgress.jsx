@@ -1,5 +1,21 @@
+/**
+ * JobProgress Component
+ * =====================
+ * 
+ * Real-time job status display with agent activity log.
+ * 
+ * Features:
+ * - Polls /api/jobs/{jobId} every 1.2 seconds
+ * - Shows status: queued, running, done, error
+ * - Displays agent progress messages in terminal-style log
+ * - Shows AI explanation when job completes
+ * - Download button for enhanced video
+ * 
+ * Stops polling when job reaches terminal state (done/error).
+ */
 import React, { useEffect, useState } from "react";
 
+// Status-based styling
 const styles = {
   card: {
     background: "#fff",

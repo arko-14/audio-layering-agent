@@ -1,9 +1,24 @@
+/**
+ * Intelligent Audio Layering System - Frontend
+ * =============================================
+ * 
+ * React single-page application for the audio layering pipeline.
+ * 
+ * Flow:
+ * 1. User uploads video via Upload component
+ * 2. JobProgress shows real-time agent activity
+ * 3. Timeline visualizes speech/music/SFX segments
+ * 4. PlayerCompare allows viewing the enhanced result
+ * 
+ * All API calls proxy through Vite to backend at localhost:8000
+ */
 import React, { useState } from "react";
 import Upload from "./components/Upload.jsx";
 import JobProgress from "./components/JobProgress.jsx";
 import Timeline from "./components/Timeline.jsx";
 import PlayerCompare from "./components/PlayerCompare.jsx";
 
+// Inline styles for the main layout
 const styles = {
   container: {
     fontFamily: "'Segoe UI', system-ui, sans-serif",

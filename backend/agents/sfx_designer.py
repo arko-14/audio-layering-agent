@@ -1,12 +1,38 @@
+"""
+SFX Designer Agent
+==================
+
+Places subtle sound effects at strategic moments (transitions, silence gaps).
+Uses Groq LLM to decide WHERE and WHICH SFX to place based on context.
+
+Design Philosophy:
+    - Less is more: Max 3 SFX for videos under 90 seconds
+    - Avoid overuse: Minimum gaps between similar SFX types
+    - Context-aware: Serious content = no SFX (distraction)
+    - Transition-focused: SFX mark scene changes, not random moments
+
+SFX Types (from library):
+    - whoosh: Smooth transitions, topic changes
+    - impact: Emphasis on key points
+    - notification: Alerts, important info
+
+Outputs:
+    sfx_plan.json with:
+    - events: [{t: timestamp, id: sfx_id, gain_db}, ...]
+    - limits: Minimum gaps between SFX types
+    - notes: Placement reasoning
+"""
 from pathlib import Path
 from graph.groq_client import groq_chat_json
 from utils.json_utils import read_json, write_json
 
+# LLM system prompt for subtle SFX placement
 SYSTEM = """You are a subtle SFX designer for social videos.
 Place minimal SFX only when it increases engagement.
 Avoid overuse. Avoid serious segments unless extremely subtle.
 Output only JSON."""
 
+# Expected JSON response schema
 SCHEMA = """
 {
   "events":[{"t":12.3,"id":"sfx-id-from-library","gain_db":-14.0}],
@@ -15,7 +41,20 @@ SCHEMA = """
 }
 """
 
+
 def sfx_designer_node(state: dict) -> dict:
+    """
+    Plan subtle sound effect placements using LLM.
+    
+    Pipeline Stage: 4 of 7
+    Input: state.artifacts['analysis_json'], state.artifacts['vibe_json']
+    Output: state.artifacts['sfx_plan_json']
+    
+    Strategy:
+    1. Find silence->speech boundaries as transition candidates
+    2. Send candidates + SFX library to LLM
+    3. LLM decides which transitions deserve SFX emphasis
+    """
     job_dir = Path(state["job_dir"])
     analysis = read_json(state["artifacts"]["analysis_json"])
     vibe = read_json(state["artifacts"]["vibe_json"])
