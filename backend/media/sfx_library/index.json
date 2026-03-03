@@ -1,0 +1,62 @@
+{
+  "sfx": [
+    {
+      "id": "dragon-studio-simple-whoosh",
+      "tags": [
+        "whoosh",
+        "subtle"
+      ],
+      "energy": 0.22,
+      "intensity": 0.69,
+      "brightness": 0.01,
+      "attack": 0.0,
+      "impact": 0.28,
+      "duration": 4.03,
+      "path": "sfx/dragon-studio-simple-whoosh-03-433005.mp3"
+    },
+    {
+      "id": "dragon-studio-whoosh-motion",
+      "tags": [
+        "whoosh",
+        "motion"
+      ],
+      "energy": 0.34,
+      "intensity": 0.68,
+      "brightness": 0.04,
+      "attack": 0.35,
+      "impact": 0.48,
+      "duration": 1.03,
+      "path": "sfx/dragon-studio-whoosh-motion-405445.mp3"
+    },
+    {
+      "id": "koiroylers-light-transition",
+      "tags": [
+        "transition",
+        "subtle"
+      ],
+      "energy": 0.2,
+      "intensity": 0.63,
+      "brightness": 0.03,
+      "attack": 0.0,
+      "impact": 0.25,
+      "duration": 8.1,
+      "path": "sfx/koiroylers-light-transition-351939.mp3"
+    },
+    {
+      "id": "rescopicsound-cinematic-designed-sci-fi-whoosh-tra",
+      "tags": [
+        "whoosh",
+        "transition",
+        "cinematic",
+        "sci-fi"
+      ],
+      "energy": 0.29,
+      "intensity": 0.74,
+      "brightness": 0.18,
+      "attack": 0.0,
+      "impact": 0.3,
+      "duration": 14.81,
+      "path": "sfx/rescopicsound-cinematic-designed-sci-fi-whoosh-transition-nexawave-228295.mp3"
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "tracks": [
+    {
+      "id": "calm_01",
+      "tags": [
+        "calm",
+        "ambient"
+      ],
+      "energy": 0.62,
+      "path": "tracks/calm_01.mp3"
+    },
+    {
+      "id": "calm_02",
+      "tags": [
+        "calm",
+        "ambient"
+      ],
+      "energy": 0.34,
+      "path": "tracks/calm_02.mp3"
+    },
+    {
+      "id": "calm_03",
+      "tags": [
+        "calm",
+        "ambient"
+      ],
+      "energy": 0.56,
+      "path": "tracks/calm_03.mp3"
+    },
+    {
+      "id": "calm_04",
+      "tags": [
+        "calm",
+        "ambient"
+      ],
+      "energy": 0.53,
+      "path": "tracks/calm_04.mp3"
+    },
+    {
+      "id": "calm_05",
+      "tags": [
+        "calm",
+        "ambient"
+      ],
+      "energy": 0.35,
+      "path": "tracks/calm_05.mp3"
+    },
+    {
+      "id": "calm_06",
+      "tags": [
+        "calm",
+        "ambient"
+      ],
+      "energy": 0.39,
+      "path": "tracks/calm_06.mp3"
+    },
+    {
+      "id": "calm_07",
+      "tags": [
+        "calm",
+        "ambient"
+      ],
+      "energy": 0.43,
+      "path": "tracks/calm_07.mp3"
+    },
+    {
+      "id": "educational_01",
+      "tags": [
+        "educational",
+        "informative"
+      ],
+      "energy": 0.6,
+      "path": "tracks/educational_01.mp3"
+    },
+    {
+      "id": "energetic_01",
+      "tags": [
+        "energetic",
+        "upbeat"
+      ],
+      "energy": 0.68,
+      "path": "tracks/energetic_01.mp3"
+    },
+    {
+      "id": "energetic_02",
+      "tags": [
+        "energetic",
+        "upbeat"
+      ],
+      "energy": 0.49,
+      "path": "tracks/energetic_02.mp3"
+    },
+    {
+      "id": "energetic_03",
+      "tags": [
+        "energetic",
+        "upbeat"
+      ],
+      "energy": 0.85,
+      "path": "tracks/energetic_03.mp3"
+    },
+    {
+      "id": "energetic_04",
+      "tags": [
+        "energetic",
+        "upbeat"
+      ],
+      "energy": 0.8,
+      "path": "tracks/energetic_04.mp3"
+    },
+    {
+      "id": "energetic_05",
+      "tags": [
+        "energetic",
+        "upbeat"
+      ],
+      "energy": 0.69,
+      "path": "tracks/energetic_05.mp3"
+    },
+    {
+      "id": "energetic_06",
+      "tags": [
+        "energetic",
+        "upbeat"
+      ],
+      "energy": 0.69,
+      "path": "tracks/energetic_06.mp3"
+    },
+    {
+      "id": "energetic_07",
+      "tags": [
+        "energetic",
+        "upbeat"
+      ],
+      "energy": 0.64,
+      "path": "tracks/energetic_07.mp3"
+    },
+    {
+      "id": "energetic_08",
+      "tags": [
+        "energetic",
+        "upbeat"
+      ],
+      "energy": 0.79,
+      "path": "tracks/energetic_08.mp3"
+    },
+    {
+      "id": "serious",
+      "tags": [
+        "serious",
+        "dramatic"
+      ],
+      "energy": 0.59,
+      "path": "tracks/serious.mp3"
+    },
+    {
+      "id": "serious_01",
+      "tags": [
+        "serious",
+        "dramatic"
+      ],
+      "energy": 0.39,
+      "path": "tracks/serious_01.mp3"
+    }
+  ]
+}
