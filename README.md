@@ -1,4 +1,4 @@
-# Intelligent Audio Layering Agent
+# SoundWeave
 
 Multi-agent system that automatically adds background music, ducking, and SFX to talking-head videos.
 

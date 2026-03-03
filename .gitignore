@@ -51,6 +51,10 @@ frontend/dist/
 # Project specific - runs folder (large output files)
 backend/runs/
 
+# Media files (large binaries - download separately)
+backend/media/music_library/tracks/
+backend/media/sfx_library/sfx/
+
 # OS files
 .DS_Store
 Thumbs.db
